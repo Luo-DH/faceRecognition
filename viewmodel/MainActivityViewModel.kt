@@ -1,6 +1,7 @@
 package com.luo.face2.viewmodel
 
 import android.graphics.Bitmap
+import androidx.camera.core.ImageProxy
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,9 @@ import com.luo.face2.MainActivity
 import com.luo.face2.repository.MainActivityRepository
 import com.luo.face2.utils.Event
 import com.luo.face2.utils.Resource
+import com.luo.face2.utils.Utils
+import com.luo.learnc01.face.RetinaFace2
+import com.luo.learnc01.modules.Box
 import com.luo.learnc01.modules.DBMsg
 import kotlinx.coroutines.launch
 
@@ -25,6 +29,9 @@ class MainActivityViewModel
 
     private val _faceList = MutableLiveData<Event<Resource<HashMap<String, DBMsg>>>>()
     val faceList: LiveData<Event<Resource<HashMap<String, DBMsg>>>> = _faceList
+
+
+
 
     /**
      * 添加人脸
@@ -45,5 +52,7 @@ class MainActivityViewModel
             _faceList.postValue(Event(Resource.success(features)))
         }
     }
+
+
 
 }

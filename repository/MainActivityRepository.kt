@@ -1,12 +1,15 @@
 package com.luo.face2.repository
 
-import android.graphics.Bitmap
+import android.graphics.*
+import androidx.camera.core.ImageProxy
 import com.apkfuns.logutils.LogUtils
 import com.luo.face2.utils.Utils
 import com.luo.face2.utils.toCropBitmap
 import com.luo.learnc01.face.ArcFace
 import com.luo.learnc01.face.RetinaFace2
+import com.luo.learnc01.modules.Box
 import kotlinx.coroutines.delay
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,5 +49,9 @@ class MainActivityRepository @Inject constructor(){
         )
 
     }
+
+
+
+
 
 }
