@@ -114,12 +114,25 @@ class DetectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUI()
+
+
         // 设置相机
         setupCameraProviderFuture()
 
         // 设置数据监听
         setupObserver()
 
+    }
+
+    private fun initUI() {
+        dbFeaturesWithBitmap = activityViewModel.faceList.value?.peekContent()?.data ?: HashMap()
+        if (dbFeaturesWithBitmap.size == 0) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().popBackStack()
+                Toast.makeText(requireContext(), "请添加人脸，人脸库为空", Toast.LENGTH_SHORT).show()
+            }, 100)
+        }
     }
 
     /**
@@ -207,7 +220,6 @@ class DetectFragment : Fragment() {
          *      获得数据后，和数据库进行比对
          */
         viewModel.feature.observe(viewLifecycleOwner) {
-
             // 进行人脸比对
             viewModel.calCosineDistance(it, dbFeaturesWithBitmap)
         }
@@ -282,6 +294,7 @@ class DetectFragment : Fragment() {
         activityViewModel.faceList.observe(this.viewLifecycleOwner) {
             it.peekContent().let { faceList ->
                 dbFeaturesWithBitmap = faceList.data ?: HashMap()
+                LogUtils.d(dbFeaturesWithBitmap)
                 binding.dbNms.text = "数据库人脸数量：${faceList.data?.size ?: 0}"
 
             }
